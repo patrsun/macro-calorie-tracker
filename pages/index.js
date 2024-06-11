@@ -4,6 +4,7 @@ import Result from "../components/result";
 import MCTForm from "../components/mctform";
 import fetch from "isomorphic-unfetch";
 import dayjs from "dayjs";
+import { MongoClient, ObjectId } from "mongodb";
 
 // const host = "https://macro-calorie-tracker.vercel.app/";
 const host = "http://localhost:3000/";
@@ -105,11 +106,33 @@ const Home = ({ data }) => {
 };
 
 export async function getStaticProps(context) {
-  const res = await fetch(`${host}api/daily`);
-  const json = await res.json();
+  const client = new MongoClient(process.env.MONGO_URI);
+
+  const dataModel = {
+    _id: new ObjectId(),
+    date: new Date(),
+    calories: { label: "Calories", total: 0, target: 0, variant: 0 },
+    carbs: { label: "Carbs", total: 0, target: 0, variant: 0 },
+    fat: { label: "Fat", total: 0, target: 0, variant: 0 },
+    protein: { label: "Protein", total: 0, target: 0, variant: 0 },
+  };
+
+  let doc = {};
+
+  try {
+    await client.connect();
+    const collection = client.db("MCT").collection("daily");
+
+    doc = await collection.findOne();
+
+    if (doc == null) doc = dataModel;
+  } catch (e) {
+    console.error(e);
+  }
+
   return {
     props: {
-      data: json,
+      data: JSON.parse(JSON.stringify(doc)),
     },
   };
 }
