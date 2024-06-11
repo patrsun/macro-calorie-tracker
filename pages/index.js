@@ -6,8 +6,8 @@ import fetch from "isomorphic-unfetch";
 import dayjs from "dayjs";
 import { MongoClient, ObjectId } from "mongodb";
 
-// const host = "https://macro-calorie-tracker.vercel.app/";
-const host = "http://localhost:3000/";
+const host = "https://macro-calorie-tracker.vercel.app/";
+// const host = "http://localhost:3000/";
 
 const Home = ({ data }) => {
   const [results, setResults] = useState(data);
