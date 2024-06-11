@@ -84,11 +84,11 @@ const Home = ({ data }) => {
           <Result results={results.protein} />
         </div>
 
-        {/* <div className="flex">
+        <div className="flex">
           <MCTForm data={results} item="Total" onChange={onChange} />
           <MCTForm data={results} item="Target" onChange={onChange} />
           <MCTForm data={results} item="Variant" onChange={onChange} />
-        </div> */}
+        </div>
 
         <div className="flex text-center">
           <div className="w-full m-4">
@@ -108,15 +108,6 @@ const Home = ({ data }) => {
 export async function getStaticProps(context) {
   const client = new MongoClient(process.env.MONGO_URI);
 
-  const dataModel = {
-    _id: new ObjectId(),
-    date: new Date(),
-    calories: { label: "Calories", total: 0, target: 0, variant: 0 },
-    carbs: { label: "Carbs", total: 0, target: 0, variant: 0 },
-    fat: { label: "Fat", total: 0, target: 0, variant: 0 },
-    protein: { label: "Protein", total: 0, target: 0, variant: 0 },
-  };
-
   let doc = {};
 
   try {
@@ -124,8 +115,6 @@ export async function getStaticProps(context) {
     const collection = client.db("MCT").collection("daily");
 
     doc = await collection.findOne();
-
-    if (doc == null) doc = dataModel;
   } catch (e) {
     console.error(e);
   }
