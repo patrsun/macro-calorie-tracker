@@ -108,6 +108,15 @@ const Home = ({ data }) => {
 export async function getStaticProps(context) {
   const client = new MongoClient(process.env.MONGO_URI);
 
+  const dataModel = {
+    _id: new ObjectId(),
+    date: new Date(),
+    calories: { label: "Calories", total: 0, target: 0, variant: 0 },
+    carbs: { label: "Carbs", total: 0, target: 0, variant: 0 },
+    fat: { label: "Fat", total: 0, target: 0, variant: 0 },
+    protein: { label: "Protein", total: 0, target: 0, variant: 0 },
+  };
+
   let doc = {};
 
   try {
@@ -115,6 +124,8 @@ export async function getStaticProps(context) {
     const collection = client.db("MCT").collection("daily");
 
     doc = await collection.findOne();
+
+    if (doc == null) doc = dataModel;
   } catch (e) {
     console.error(e);
   }
