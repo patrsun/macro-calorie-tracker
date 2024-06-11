@@ -129,4 +129,4 @@ handler.post(async (req, res) => {
   res.json({ message: "ok" });
 });
 
-module.exports = allowCors(handler);
+export default allowCors(handler);
