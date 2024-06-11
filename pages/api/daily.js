@@ -130,3 +130,4 @@ handler.post(async (req, res) => {
 });
 
 export default allowCors(handler);
+// export default handler;
