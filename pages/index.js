@@ -24,7 +24,7 @@ const Home = ({ data }) => {
 
   const getDataForPreviousDay = async () => {
     let currentDate = dayjs(results.date);
-    let newDate = currentDate.subtract(1, "day").format("YYYY-MM-DDTHH:mm:ss");
+    let newDate = currentDate.subtract(1, "day").format("YYYY-MM-DD");
     const res = await fetch(`${host}api/daily?date=${newDate}`);
     const json = await res.json();
 
@@ -33,7 +33,7 @@ const Home = ({ data }) => {
 
   const getDataForNextDay = async () => {
     let currentDate = dayjs(results.date);
-    let newDate = currentDate.add(1, "day").format("YYYY-MM-DDTHH:mm:ss");
+    let newDate = currentDate.add(1, "day").format("YYYY-MM-DD");
     const res = await fetch(`${host}api/daily?date=${newDate}`);
     const json = await res.json();
 
