@@ -14,7 +14,7 @@ const Home = ({ data }) => {
 
   const onChange = (e) => {
     const data = { ...results };
-    let name = e.target.name;
+    let name = e.target.name + "";
     let resultType = name.split(" ")[0].toLowerCase();
     let resultMacro = name.split(" ")[1].toLowerCase();
     data[resultMacro][resultType] = parseInt(e.target.value);
